@@ -32,9 +32,13 @@ fn main() -> SC2Result<()> {
     let unit_spawner_bot = unit_spawner::bots::UnitSpawner::default();
     let unit_spawner_mover_bot = unit_spawner::bots::UnitSpawnerMover::default();
 
+    // let ten_seconds_bot = unit_spawner::bots::TenSecondsReplay::default();
+
     let mut vec_of_bots = Vec::<Bots>::new();
     vec_of_bots.push(Bots::UnitSpawner(unit_spawner_bot));
     vec_of_bots.push(Bots::UnitSpawnerMover(unit_spawner_mover_bot));
+
+    // start_the_runner(ten_seconds_bot, "ten_seconds");
 
     for bot in vec_of_bots {
         match bot {

@@ -1,5 +1,3 @@
-use std::fmt::Display;
-
 use rust_sc2::prelude::*;
 
 use crate::unit_spawner::utils;
@@ -236,6 +234,35 @@ impl Player for UnitSpawnerMover {
                 self.debug.kill_units(units.iter());
                 self.is_clean = true;
             }
+        }
+
+        Ok(())
+    }
+}
+
+#[bot]
+#[derive(Default)]
+pub struct TenSecondsReplay {
+    pub vector_of_units: Vec<UnitTypeId>,
+    pub is_clean: bool,
+    pub current_loop: u32,
+    pub base_structure_id: u64,
+}
+impl Player for TenSecondsReplay {
+    fn get_player_settings(&self) -> PlayerSettings {
+        PlayerSettings::new(Race::Protoss)
+    }
+    fn on_start(&mut self) -> SC2Result<()> {
+        Ok(())
+    }
+
+    // Called on every game step
+    fn on_step(&mut self, iteration: usize) -> SC2Result<()> {
+        // let current_loop = self.state.observation.game_loop();
+
+        if iteration == 160 {
+            // END GAME:
+            self.debug.end_game()
         }
 
         Ok(())
